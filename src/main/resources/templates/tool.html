@@ -1,0 +1,106 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MANAGE TOOL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+    </style>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/manage.css" />
+</head>
+<body>
+    <div th:id="${id}" class="container">
+        <div class="preview" id="dest_copy" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></div>
+        <div class="item-controller">
+            <div class="item-box">
+                <button class="item-box-text" onclick="expend(event);">
+                    <span>레이아웃 아이템</span>
+                </button>
+                <div id="itemBox" class="item-box-content layout">
+                    <div id="item5" ondragstart="dragstart_handler(event);" ondragend="dragend_handler(event);" class="item item5" draggable="true"></div>
+                    <div id="item4" ondragstart="dragstart_handler(event);" ondragend="dragend_handler(event);" class="item item4" draggable="true"></div>
+                    <div id="item3" ondragstart="dragstart_handler(event);" ondragend="dragend_handler(event);" class="item item3" draggable="true"></div>
+                    <div id="item2" ondragstart="dragstart_handler(event);" ondragend="dragend_handler(event);" class="item item2" draggable="true"></div>
+                    <div id="item1" ondragstart="dragstart_handler(event);" ondragend="dragend_handler(event);" class="item item1" draggable="true"></div>
+                </div>
+            </div>
+            <div class="item-box">
+                <button class="item-box-text" onclick="expend(event);">
+                    <span>배경 설정</span>
+                </button>
+                <div class="item-box-content hidden" id="picker">
+                    <div class="picker"></div>
+                </div>
+            </div>
+            <div class="item-btn">
+                <button onclick="sendImages();">저장하기</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="hidden-div">
+        <div id="r-item1" class="hidden item1 item r" onclick="clickHandler(event)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <div id="r-item2" class="hidden item2 item r" onclick="clickHandler(event)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <div id="r-item3" class="hidden item3 item r" onclick="clickHandler(event)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <div id="r-item4" class="hidden item4 item r" onclick="clickHandler(event)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <div id="r-item5" class="hidden item5 item r" onclick="clickHandler(event)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+    </div>
+    <div id="hidden-form">
+        <form id="hidden-form-obj">
+            <input type="file" id="file" name="images" class="template" onchange="loadImage(this)"/>
+        </form>
+    </div>
+    
+</body>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+<script src="/js/colorPicker.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/js/manage.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script>
+    function shV2 () {
+    const captureElem = document.getElementById('dest_copy');
+    const currentUrl = window.location.href;
+    const class_id = $('.container').attr('id');
+    const bg = document.querySelector(".preview").style.backgroundColor;
+
+    html2canvas(captureElem).then(canvas => {   
+        canvas.toBlob(blob => {
+            const formData = new FormData($('#hidden-form-obj')[0]);
+            formData.append("items", new Blob([JSON.stringify(sizes)], {
+                type: "application/json"
+            }));
+            formData.append("thumbnail", blob);
+            formData.append("backgroundHEX", bg);
+            
+            $.ajax({
+                async: false,
+                type: 'post',
+                url: '/tool/' + class_id,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (data) => {
+                    window.location.href = data
+                },
+                error: (err) => { console.log(err); }
+            });
+        });
+    });
+}
+function sendImages() {
+    shV2();
+}
+</script>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+    </style>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+    <div class="intro">
+        <video src="/css/bgMovie.mp4" muted autoplay loop></video>
+        <div class="intro-content fade-in-box ">
+            <div class="title">
+                <h1>iGallery</h1>
+                <span>
+                    사진은 단순한 그림이 아닙니다<br/>
+                    여러분의 추억이자 낭만입니다<br/>
+                    나만의 갤러리를 남들과 공유하세요
+                </span> <br/>
+                <th:block th:if="${login}">
+                    <button class="intro-btn button1" onclick="location.href='/profile'">
+                        시작하기
+                    </button>
+                </th:block>
+                <th:block th:unless="${login}"> 
+                    <img 
+                        style="cursor: pointer;"
+                        class="klogin"
+                        src="/css/kakao_login_large_wide.png" 
+                        onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=96679cb457a1d34481ca13d3259094c0&redirect_uri=http://localhost:8080/auth/kakao&response_type=code'"/>
+                </th:block>
+            </div>
+            <iframe width="500" height="370" src="https://www.youtube.com/embed/sLCiI6d5vTM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+<script src="/js/index.js"></script>
+<script>
+    const setVh = () => {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`)
+    };
+    window.addEventListener('resize', setVh);
+    setVh();
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+
+@font-face {
+    font-family: 'TAEBAEKmilkyway';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/TAEBAEKmilkyway.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.info {
+    font-family: 'TAEBAEKmilkyway';
+    font-size: 24px;
+    letter-spacing: -1px;
+    color: gray;
+    margin-top: 50px;
+    margin-left: 100px;
+}
+
+.main {
+    position: relative;
+
+    width: 860px;
+    height: 100%;
+
+    margin: auto;
+
+    padding-top: 100px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  
+    grid-auto-rows: 250px;  
+    grid-gap: 1rem;
+}
+
+.item img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.item {
+    width: 100%;
+    height: 100%;
+    background-color: #1c1c1c;
+}
+.item1 {
+    grid-column: span 1;
+}
+.item2 {
+    grid-column: span 2;
+}
+.item3 {
+    grid-row: span 2;
+}
+.item4 {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+.item5 {
+    grid-column: span 3;
+}
+
+.fade-in-box {
+    animation: fadein 3s;
+    -moz-animation: fadein 3s; /* Firefox */
+    -webkit-animation: fadein 3s; /* Safari and Chrome */
+    -o-animation: fadein 3s; /* Opera */
+}
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-overlay {
+    position: absolute;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+    filter: blur(50px);
+    -webkit-filter: blur(50px);
+}
+
+.modal-content {
+    display: flex;
+    position: relative;
+    width: 70%;
+    height: 80%;
+
+    background-color: black;
+}
+
+#modal-img {
+    object-fit: cover;
+    width: 75%;
+    height: 100%;
+}
+
+.metadata {
+    position: relative;
+    color: white;
+    margin: 12px;
+    width: 25%;
+}
+
+.metadata h1 {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 14px;
+}
+
+.metadata span {
+    font-weight: lighter;
+    color: rgb(200, 200, 200);
+    padding-left: 14px;
+}
+
+.map-wrapper {
+    position: absolute;
+    bottom: 2px;
+    height: 300px;
+    width: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+a { text-decoration: none; color: gray; font-weight: bold; }

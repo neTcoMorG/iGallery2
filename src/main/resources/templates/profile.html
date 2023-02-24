@@ -1,0 +1,70 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                    <form class="modal-item" method="post" action="/gallery">
+                        <textarea name="sub" placeholder="내용"></textarea>
+                        <button class="button2" type="submit">생성하기</button>
+                    </form>
+            </div>
+        </div>
+        <div class="profile">
+            <div class="circle">
+                <img th:src="${user.thumbnail}" />
+            </div>
+            <div class="detail">
+                <div class="text">
+                    <h2 th:text="${user.name}" id="name"></h2>
+                    <h2 th:text="${user.email}" id="email"></h2>
+                </div>
+            </div>
+            <th:block th:if="${isOwner}">
+                <button class="newBtn" onclick="modal_processor()">새 갤러리</button>
+            </th:block>
+        </div>
+        <div class="content">
+            <th:block th:if="${not #strings.isEmpty(galleries)}">
+                <div 
+                    class="item"
+                    th:each="gallery : ${galleries}"
+                    style="cursor: pointer;">
+                    <i th:if="${isOwner}" class="delete" 
+                        th:onclick="|location.href='/gallery/delete/${gallery.id}'|">❌</i>
+                    <div class="item-cover">
+                        <img th:src="'/thumbnail/' + ${gallery.id}" 
+                            onerror="this.style.display='none'"/>
+                    </div>
+                    <div class="item-sub" th:onclick="|location.href='/gallery/${gallery.id}'|">
+                        <h2 th:text="${gallery.sub}" style="color: black;"></h2>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:unless="${not #strings.isEmpty(galleries)}">
+                <div class="not-content">
+                    <h1>아무런 갤러리가 없네요.</h1>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</body>
+<script>
+    function modal_processor() {
+    const modal = document.querySelector(".modal");
+    const overlay = document.querySelector(".modal-overlay");
+    
+    modal.classList.remove("hidden");
+
+    overlay.addEventListener('click', () => {
+        modal.classList.add("hidden");
+    });
+}
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</html>

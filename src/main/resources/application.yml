@@ -1,0 +1,35 @@
+spring:
+  servlet:
+    multipart:
+      maxFileSize: 50MB
+      maxRequestSize: 50MB
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #format_sql: true
+        #show_sql: true
+
+file:
+  img: C:\img\
+  thumbnail: C:\thumbnail\
+
+oauth:
+  kakao:
+    client_id: #
+    secret_id: #
+    redirect_url: http://localhost:8080/auth/kakao

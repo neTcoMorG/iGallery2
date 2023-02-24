@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+    </style>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/show.css" />
+</head>
+<body th:style="|background-color: ${gallery.backgroundColor}|">
+    <div class="container">
+        <div class="info">
+            <a th:text="|${gallery.user.name}님의 갤러리|" th:href="|/profile/${gallery.user.email}|"></a>
+        </div>
+        <div class="main">
+            <div th:each="image : ${gallery.images}" th:class="'item fade-in-box ' + ${image.itemType}" onclick="imageHandler(event);">
+                <img th:id="${image.id}" th:src="'/image/' + ${image.savedName}" />
+            </div>
+        </div>
+    </div>   
+</body>
+<script src="/js/show.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</html>
