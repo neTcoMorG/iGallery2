@@ -1,6 +1,7 @@
 package com.igrallery.jun.web.controller.handler;
 
 import com.igrallery.jun.domain.exception.AuthorizationException;
+import com.igrallery.jun.domain.exception.FileSaveException;
 import com.igrallery.jun.domain.exception.GalleryNotFoundException;
 import com.igrallery.jun.domain.exception.PermissionsException;
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,10 @@ public class ServiceLayerExceptionHandler {
     @ExceptionHandler(GalleryNotFoundException.class)
     public void galleryNotFoundExceptionHandler (Exception e, HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value());
+    }
+
+    @ExceptionHandler(FileSaveException.class)
+    public void fileSaveExceptionHandler (RuntimeException e, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 }

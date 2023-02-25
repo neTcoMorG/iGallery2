@@ -3,6 +3,8 @@ package com.igrallery.jun.domain.service.file;
 import com.igrallery.jun.domain.entity.Gallery;
 import com.igrallery.jun.domain.entity.img.Image;
 import com.igrallery.jun.domain.entity.img.ItemType;
+import com.igrallery.jun.domain.exception.ImageSaveException;
+import com.igrallery.jun.domain.exception.ThumbnailSaveException;
 import com.igrallery.jun.domain.repository.ImageRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
+import java.nio.file.FileSystemException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -70,7 +73,7 @@ public class FileServiceDiskImpl implements FileService {
     private void saveThumbnail (Gallery gallery, MultipartFile thumbnail) {
         File th = getThumbnail();
         try { thumbnail.transferTo(th); }
-        catch (Exception e) { throw new IllegalStateException(); }
+        catch (Exception e) { throw new ThumbnailSaveException(); }
         gallery.updateThumbnail(th.getPath());
     }
 
@@ -93,7 +96,7 @@ public class FileServiceDiskImpl implements FileService {
                     saveInfo.getOriginalName(), saveInfo.getSavedName(), saveInfo.getFullPath());
             img = imageRepository.save(img);
         }
-        catch (Exception e) { throw new IllegalStateException(); }
+        catch (Exception e) { throw new ImageSaveException(); }
     }
 
     private File getThumbnail () {
