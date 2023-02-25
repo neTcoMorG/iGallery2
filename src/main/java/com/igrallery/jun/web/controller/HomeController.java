@@ -15,8 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final GalleryRepository galleryRepository;
-
     @GetMapping
     public String homePage (Model model, HttpServletRequest request) {
         if (isLogin(request.getSession(false))) {

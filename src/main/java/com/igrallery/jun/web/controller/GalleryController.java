@@ -25,7 +25,6 @@ import java.io.IOException;
 public class GalleryController {
 
     private final GalleryService galleryService;
-    private final GalleryRepository galleryRepository;
 
     @PostMapping
     public String createGallery (@ModelAttribute @Valid GalleryForm form, User user) {
@@ -34,7 +33,7 @@ public class GalleryController {
 
     @GetMapping("{id}")
     public String showGallery (@PathVariable Long id, Model model, HttpServletResponse response) throws IOException {
-        Gallery gallery = getGallery(id);
+        Gallery gallery = galleryService.get(id);
         model.addAttribute("gallery", gallery);
         return "show";
     }
@@ -47,7 +46,11 @@ public class GalleryController {
 
     @GetMapping("/modify/{gid}")
     public String modifyGalleryPage (@PathVariable Long gid, User user, HttpServletRequest request, Model model) {
-        Gallery gallery = galleryService.isValidThenGet(user, gid);
+        Gallery gallery = galleryService.get(gid);
+
+        if (!gallery.isOwner(user))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
         model.addAttribute("gallery", gallery);
         return "modify";
     }
@@ -55,10 +58,5 @@ public class GalleryController {
     @PostMapping("/modify/{gid}")
     public String modifyGallery (@PathVariable Long gid, User user, HttpServletRequest request) {
         return "redirect:/gallery/" + gid;
-    }
-
-    private Gallery getGallery (Long id) {
-        return galleryRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 갤러리는 존재하지 않습니다"));
     }
 }

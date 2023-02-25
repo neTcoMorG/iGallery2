@@ -15,5 +15,5 @@ public interface GalleryService {
 
     Gallery modify(GalleryModifyDto dto);
 
-    Gallery isValidThenGet (User user, Long gid);
+    Gallery get (Long id);
 }

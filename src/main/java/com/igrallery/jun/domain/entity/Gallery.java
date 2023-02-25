@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -37,7 +38,7 @@ public class Gallery {
     @Column(name = "BACKGROUND_COLOR") private String backgroundColor;
 
     @Column(name = "THUMBNAIL") private String thumbnail;
-    @OneToMany(mappedBy = "gallery") private List<Image> images;
+    @OneToMany(mappedBy = "gallery") private List<Image> images = new ArrayList<>();
 
     public boolean isOwner(User user) {
         return this.user.equals(user);

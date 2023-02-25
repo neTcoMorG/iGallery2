@@ -47,7 +47,7 @@ public class FileServiceDiskImpl implements FileService {
         List<MultipartFile> safeImages = filter(images);
 
         if (isIllegal(safeImages, thumbnail, itemTypes))
-            throw new IllegalStateException("오염된 전송");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         for (int i=0; i< safeImages.size(); i++) {
             if (isValid(safeImages.get(i), ItemType.valueOf(itemTypes.get(i)))) {
@@ -64,13 +64,13 @@ public class FileServiceDiskImpl implements FileService {
     }
 
     private boolean isValid (MultipartFile multipartFile, ItemType itemType) {
-        return !multipartFile.getName().isEmpty() && itemType != null;
+        return !multipartFile.isEmpty() && itemType != null;
     }
 
     private void saveThumbnail (Gallery gallery, MultipartFile thumbnail) {
         File th = getThumbnail();
         try { thumbnail.transferTo(th); }
-        catch (Exception e) { throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "썸네일 저장 오류"); }
+        catch (Exception e) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST); }
         gallery.updateThumbnail(th.getPath());
     }
 
@@ -93,7 +93,7 @@ public class FileServiceDiskImpl implements FileService {
                     saveInfo.getOriginalName(), saveInfo.getSavedName(), saveInfo.getFullPath());
             img = imageRepository.save(img);
         }
-        catch (Exception e) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "파일을 저장할 수 없음"); }
+        catch (Exception e) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST); }
     }
 
     private File getThumbnail () {

@@ -32,7 +32,7 @@ public class GalleryServiceImpl implements GalleryService {
     @Override
     @Transactional
     public void delete (User user, Long gid) {
-        Gallery gallery = getGallery(gid);
+        Gallery gallery = get(gid);
 
         if (!gallery.isOwner(user))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "잘못된 접근입니다.");
@@ -46,17 +46,7 @@ public class GalleryServiceImpl implements GalleryService {
         return null;
     }
 
-    @Override
-    public Gallery isValidThenGet (User user, Long gid) {
-        Gallery findGallery = getGallery(gid);
-
-        if (!findGallery.isOwner(user))
-            throw new ResponseStatusException(HttpStatus.NON_AUTHORITATIVE_INFORMATION, "해당 갤러리를 수정할 권한이 없습니다");
-
-        return findGallery;
-    }
-
-    public Gallery getGallery (Long id) {
+    public Gallery get (Long id) {
         return galleryRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "갤러리가 존재하지 않습니다"));
     }
