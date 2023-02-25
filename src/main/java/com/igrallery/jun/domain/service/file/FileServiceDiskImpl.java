@@ -47,7 +47,7 @@ public class FileServiceDiskImpl implements FileService {
         List<MultipartFile> safeImages = filter(images);
 
         if (isIllegal(safeImages, thumbnail, itemTypes))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new IllegalStateException("파일의 유효성이 옳지 않음");
 
         for (int i=0; i< safeImages.size(); i++) {
             if (isValid(safeImages.get(i), ItemType.valueOf(itemTypes.get(i)))) {
@@ -70,7 +70,7 @@ public class FileServiceDiskImpl implements FileService {
     private void saveThumbnail (Gallery gallery, MultipartFile thumbnail) {
         File th = getThumbnail();
         try { thumbnail.transferTo(th); }
-        catch (Exception e) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST); }
+        catch (Exception e) { throw new IllegalStateException(); }
         gallery.updateThumbnail(th.getPath());
     }
 
@@ -93,7 +93,7 @@ public class FileServiceDiskImpl implements FileService {
                     saveInfo.getOriginalName(), saveInfo.getSavedName(), saveInfo.getFullPath());
             img = imageRepository.save(img);
         }
-        catch (Exception e) { throw new ResponseStatusException(HttpStatus.BAD_REQUEST); }
+        catch (Exception e) { throw new IllegalStateException(); }
     }
 
     private File getThumbnail () {

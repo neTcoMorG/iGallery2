@@ -5,6 +5,8 @@ import com.igrallery.jun.domain.dto.GalleryModifyDto;
 import com.igrallery.jun.domain.entity.Gallery;
 import com.igrallery.jun.domain.entity.User;
 import com.igrallery.jun.domain.entity.img.Image;
+import com.igrallery.jun.domain.exception.GalleryNotFoundException;
+import com.igrallery.jun.domain.exception.PermissionsException;
 import com.igrallery.jun.domain.repository.GalleryRepository;
 import com.igrallery.jun.domain.repository.ImageRepository;
 import com.igrallery.jun.domain.service.file.FileService;
@@ -35,7 +37,7 @@ public class GalleryServiceImpl implements GalleryService {
         Gallery gallery = get(gid);
 
         if (!gallery.isOwner(user))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "잘못된 접근입니다.");
+            throw new PermissionsException("잘못된 접근");
 
         delete(gallery);
     }
@@ -48,8 +50,7 @@ public class GalleryServiceImpl implements GalleryService {
 
     public Gallery get (Long id) {
         return galleryRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "갤러리가 존재하지 않습니다"));
-    }
+                GalleryNotFoundException::new);}
 
     private void permanentDeleteImage (Image image) {
         fileService.delete(image);

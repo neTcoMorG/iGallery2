@@ -1,4 +1,4 @@
-package com.igrallery.jun.web.exception;
+package com.igrallery.jun.domain.exception;
 
 
 public class AuthorizationException extends Exception {

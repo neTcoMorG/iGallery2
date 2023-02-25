@@ -2,7 +2,7 @@ package com.igrallery.jun.web.resolver;
 
 import com.igrallery.jun.domain.entity.User;
 import com.igrallery.jun.domain.repository.UserRepository;
-import com.igrallery.jun.web.exception.AuthorizationException;
+import com.igrallery.jun.domain.exception.AuthorizationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

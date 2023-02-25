@@ -1,6 +1,6 @@
 package com.igrallery.jun.web.interceptor;
 
-import com.igrallery.jun.web.exception.AuthorizationException;
+import com.igrallery.jun.domain.exception.AuthorizationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
