@@ -30,6 +30,6 @@ file:
 
 oauth:
   kakao:
-    client_id: #
-    secret_id: #
+    client_id: 96679cb457a1d34481ca13d3259094c0
+    secret_id: YUochVCuIqNcXCeQoG0gNBVLC9jTiZKo
     redirect_url: http://localhost:8080/auth/kakao

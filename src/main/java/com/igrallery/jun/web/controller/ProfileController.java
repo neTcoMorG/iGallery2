@@ -26,7 +26,12 @@ public class ProfileController {
 
     @GetMapping
     public String profilePage (Model model, HttpServletRequest request) {
-        return profilePage(request.getSession(false).getAttribute("email").toString(), model,  request);
+        HttpSession session = request.getSession(false);
+
+
+        return session == null ?
+                "index" :
+                profilePage(request.getSession(false).getAttribute("email").toString(), model,  request);
     }
 
     @GetMapping("/{email}")

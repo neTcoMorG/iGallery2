@@ -37,7 +37,7 @@ public class GalleryServiceImpl implements GalleryService {
         if (!gallery.isOwner(user))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "잘못된 접근입니다.");
 
-        deleteGallery(gallery);
+        delete(gallery);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class GalleryServiceImpl implements GalleryService {
         if (file.exists()) file.delete();
     }
 
-    private void deleteGallery (Gallery gallery) {
+    private void delete (Gallery gallery) {
         permanentDeleteThumbnail(gallery);
         gallery.getImages().forEach(this::permanentDeleteImage);
         galleryRepository.delete(gallery);
